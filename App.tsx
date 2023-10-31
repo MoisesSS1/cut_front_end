@@ -1,20 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView as SafeAreaViewAndroid } from "react-native-safe-area-context";
+import { SafeAreaView as SafeAreaViewIos } from "react-native";
+import Home from "./src/pages/Home/Home";
+import { Platform } from "react-native";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      {Platform.OS === "ios" && (
+        <SafeAreaViewIos style={{ flex: 1 }}>
+          <Home />
+        </SafeAreaViewIos>
+      )}
+
+      {Platform.OS === "android" && (
+        <SafeAreaViewAndroid style={{ flex: 1 }}>
+          <Home />
+        </SafeAreaViewAndroid>
+      )}
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
