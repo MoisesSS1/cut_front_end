@@ -27,6 +27,4 @@ const Navbar = () => {
       </BoxIcon>
     </Container>
   );
-};
 
-export default Navbar;

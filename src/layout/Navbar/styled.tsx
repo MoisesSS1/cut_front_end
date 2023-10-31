@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+<<<<<<< HEAD
 import global from "../../global/global";
 
 export const Container = styled.View`
@@ -29,4 +30,14 @@ export const DescIcon = styled.Text`
   color: ${global.theme.colors.gray2};
   font-weight: bold;
   padding-top: 10px;
+=======
+
+export const Container = styled.View`
+  width: 100%;
+  height: 100px;
+  background-color: red;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+>>>>>>> 8369642cdb5d159d5165cfb62f14193459297996
 `;
