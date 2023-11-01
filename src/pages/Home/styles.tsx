@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-
 import global from "../../global/global";
 
 export const Container = styled.View`

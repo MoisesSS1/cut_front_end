@@ -13,7 +13,7 @@ const Navbar = () => {
 
       <BoxIcon>
         <Icon name="reorder" size={20} />
-        <DescIcon>Pedidos</DescIcon>
+        <DescIcon>Agenda</DescIcon>
       </BoxIcon>
 
       <BoxIcon>
