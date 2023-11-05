@@ -2,8 +2,6 @@ import styled from "styled-components/native";
 import global from "../../global/global";
 
 export const Content = styled.View`
-  height: 100px;
-  width: 70px;
   align-items: center;
   margin: 30px;
 `;

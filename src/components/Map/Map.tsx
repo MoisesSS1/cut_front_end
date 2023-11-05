@@ -21,7 +21,7 @@ const Map = () => {
             latitude: -23.4874944,
             longitude: -46.8901034,
           }}
-          title="João Biruta"
+          title="Moises"
           description="Corte, barba, cabelo e bigode"
         >
           <Content>
