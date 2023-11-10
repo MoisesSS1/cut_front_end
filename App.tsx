@@ -1,26 +1,34 @@
-import { SafeAreaView as SafeAreaViewAndroid } from "react-native-safe-area-context";
-import { SafeAreaView as SafeAreaViewIos } from "react-native";
 import Home from "./src/pages/Home/Home";
-import { Platform } from "react-native";
 import Agenda from "./src/pages/Agenda/Agenda";
 import ProfileProfessional from "./src/pages/ProfileProfessional/ProfileProfessional";
 
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 export default function App() {
-  const tela = "home";
+  const Stack = createNativeStackNavigator();
 
   return (
     <>
-      {Platform.OS === "ios" && (
-        <SafeAreaViewIos style={{ flex: 1 }}>
-          <Home />
-        </SafeAreaViewIos>
-      )}
-
-      {Platform.OS === "android" && (
-        <SafeAreaViewAndroid style={{ flex: 1 }}>
-          <Home />
-        </SafeAreaViewAndroid>
-      )}
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ title: "", headerShown: false }}
+          />
+          <Stack.Screen
+            name="Agenda"
+            component={Agenda}
+            options={{ headerTransparent: true, headerShown: false }}
+          />
+          <Stack.Screen
+            name="ProfileProfessional"
+            options={{ headerTransparent: true, title: "" }}
+            component={ProfileProfessional}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 }

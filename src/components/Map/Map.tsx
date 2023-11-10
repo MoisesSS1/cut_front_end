@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Balon, Content, ImgTriangle, ImgUser } from "./styles";
 
-const Map = () => {
+const Map = ({ navigation }: any) => {
   return (
     <>
       <MapView
@@ -16,13 +16,13 @@ const Map = () => {
         }}
       >
         <Marker
+          onPress={() => navigation.navigate("ProfileProfessional")}
           key={1}
           coordinate={{
             latitude: -23.4874944,
             longitude: -46.8901034,
           }}
           title="Moises"
-          description="Corte, barba, cabelo e bigode"
         >
           <Content>
             <Balon>
@@ -40,13 +40,13 @@ const Map = () => {
         </Marker>
 
         <Marker
+          onPress={() => navigation.navigate("ProfileProfessional")}
           key={2}
           coordinate={{
             latitude: -23.4878,
             longitude: -46.8884,
           }}
           title="João Biruta"
-          description="Corte, barba, cabelo e bigode!"
         >
           <Content>
             <Balon>
@@ -64,13 +64,13 @@ const Map = () => {
         </Marker>
 
         <Marker
+          onPress={() => navigation.navigate("ProfileProfessional")}
           key={5}
           coordinate={{
             latitude: -23.491484361324922,
             longitude: -46.88868679755403,
           }}
           title="Barbearia do Vini"
-          description="Corte, barba, cabelo e bigode!"
         >
           <Content>
             <Balon>

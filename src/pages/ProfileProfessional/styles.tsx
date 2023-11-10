@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 
 export const Container = styled.View`
+  background-color: white;
   flex: 1;
 `;
 
@@ -20,6 +21,6 @@ export const ImgPlace = styled.Image`
 export const Services = styled.View`
   height: 24%;
   margin: 0px 20px;
-  border-bottom-width: 3px;
+  border-bottom-width: 2px;
   border-bottom-color: #000000;
 `;
