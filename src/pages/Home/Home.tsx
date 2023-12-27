@@ -1,57 +1,40 @@
-import { Platform } from "react-native";
+import { useState } from "react";
 import Map from "../../components/Map/Map";
-import global from "../../global/global";
 import Navbar from "../../layout/Navbar/Navbar";
-import { BoxAdress, Container, Content, TextAdress } from "./styles";
+import { BoxAdress, Container, Content } from "./styles";
 
-import { SafeAreaView as SafeAreaViewAndroid } from "react-native-safe-area-context";
-import { SafeAreaView as SafeAreaViewIos } from "react-native";
-
-import Icon from "react-native-vector-icons/Entypo";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 const Home = ({ navigation }: any) => {
+  const [coordenates, setCoordenates] = useState<any>([-23.5489, -46.6388]);
+
   return (
-    <>
-      {Platform.OS === "ios" && (
-        <SafeAreaViewIos style={{ flex: 1, backgroundColor: "#ffffff" }}>
-          <Container>
-            <BoxAdress>
-              <Icon
-                name="location-pin"
-                size={30}
-                color={global.theme.colors.black}
-              />
-              <TextAdress placeholder="Buscar profissionais proximos"></TextAdress>
-            </BoxAdress>
+    <Container>
+      <BoxAdress>
+        <GooglePlacesAutocomplete
+          placeholder="Digite seu endereço"
+          fetchDetails={true}
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
 
-            <Content>
-              <Map navigation={navigation} />
-            </Content>
-            <Navbar navigation={navigation}></Navbar>
-          </Container>
-        </SafeAreaViewIos>
-      )}
+            setCoordenates(null);
+            setCoordenates([
+              details?.geometry.location.lat,
+              details?.geometry.location.lng,
+            ]);
+          }}
+          query={{
+            key: "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0",
+            language: "pt-br",
+          }}
+        />
+      </BoxAdress>
 
-      {Platform.OS === "android" && (
-        <SafeAreaViewAndroid style={{ flex: 1, backgroundColor: "#ffffff" }}>
-          <Container>
-            <BoxAdress>
-              <Icon
-                name="location-pin"
-                size={30}
-                color={global.theme.colors.black}
-              />
-              <TextAdress placeholder="Buscar profissionais proximos"></TextAdress>
-            </BoxAdress>
-
-            <Content>
-              <Map navigation={navigation} />
-            </Content>
-            <Navbar navigation={navigation}></Navbar>
-          </Container>
-        </SafeAreaViewAndroid>
-      )}
-    </>
+      <Content>
+        <Map navigation={navigation} coordenates={coordenates} />
+      </Content>
+      <Navbar navigation={navigation}></Navbar>
+    </Container>
   );
 };
 

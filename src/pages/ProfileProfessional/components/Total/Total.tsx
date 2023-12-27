@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BoxInfo,
   ButtonFinishOrde,
   ContainerPayment,
-  DateAndHour,
   TextButton,
   ValueTotal,
 } from "./style";
 
-const Total = () => {
+interface Props {
+  total: number;
+}
+
+const Total = ({ total }: Props) => {
   return (
     <ContainerPayment>
       <BoxInfo>
-        <ValueTotal>R$ 25,00</ValueTotal>
-        <DateAndHour>11/12</DateAndHour>
+        <ValueTotal>R$ {total.toFixed(2)} </ValueTotal>
       </BoxInfo>
 
       <ButtonFinishOrde>

@@ -12,26 +12,38 @@ export const InforDays = styled.View`
   justify-content: center;
 `;
 export const BoxDays = styled.View`
-  margin: 10px;
   justify-content: center;
   align-items: center;
-  width: 40px;
+  width: 90%;
+`;
+export const BoxDayFind = styled.TouchableOpacity<{ $select?: boolean }>`
+  background-color: ${(props) => (props.$select ? "#9ff8cc" : "#bebee2")};
+  margin: 0px 10px;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
 `;
 
 export const HoursDisponibility = styled.View`
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   height: 200px;
   width: 100%;
 `;
 
 export const BoxTime = styled.View`
   flex-direction: row;
+  text-align: center;
   flex-wrap: wrap;
   margin: 5px;
 `;
 
-export const Hour = styled.TouchableOpacity`
+export const Hour = styled.TouchableOpacity<{ $disponibility?: boolean }>`
   margin: 10px;
-  background-color: #eae9ee;
+  background-color: ${(props) =>
+    props.$disponibility ? "#eae9ee" : "#fc4273;"};
   align-items: center;
   justify-content: center;
   width: 60px;

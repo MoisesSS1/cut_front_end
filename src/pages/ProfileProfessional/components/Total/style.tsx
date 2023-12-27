@@ -8,6 +8,7 @@ export const ContainerPayment = styled.View`
   width: 100%;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 export const BoxInfo = styled.View`
@@ -18,11 +19,6 @@ export const BoxInfo = styled.View`
 `;
 export const ValueTotal = styled.Text`
   font-size: 20px;
-  font-weight: bold;
-`;
-export const DateAndHour = styled.Text`
-  margin-top: 5px;
-  font-size: 18px;
   font-weight: bold;
 `;
 

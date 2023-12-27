@@ -1,5 +1,6 @@
 import { Text, ScrollView } from "react-native";
 import {
+  BoxDayFind,
   BoxDays,
   BoxTime,
   ContainerSchedule,
@@ -7,136 +8,148 @@ import {
   HoursDisponibility,
   InforDays,
 } from "./style";
+import { useEffect, useState } from "react";
+import api from "../../../../services/axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Schedule = () => {
+interface Props {
+  id: string;
+}
+
+const Schedule = ({ id }: Props) => {
+  const [dateSelect, setDateSelet] = useState();
+  const [hours, setHours] = useState<any>();
+  //state para guardar datas dos proximos 15 dias
+  const [datesFilter, setDatesFilter] = useState<Array<string>>([]);
+  const [resApi, setResApi] = useState<string | boolean>(false);
+
+  useEffect(() => {
+    setDatesFilter([""]);
+    GetNext15Days();
+  }, []);
+
+  function checkhourSelect(init: string, index: number) {
+    //pegar indice do horario
+
+    console.log(init, index);
+  }
+
+  useEffect(() => {
+    findDisponibility(id);
+  }, [dateSelect]);
+
+  async function GetNext15Days() {
+    let date = new Date();
+    for (let i = 0; i < 14; i++) {
+      const dateEdit = `${date.getDate()}-${
+        date.getMonth() + 1
+      }-${date.getFullYear()}`;
+
+      let dates = datesFilter;
+
+      dates.push(dateEdit);
+      setDatesFilter(dates);
+      date.setDate(date.getDate() + 1);
+    }
+  }
+  async function findDisponibility(id: string) {
+    const token = await AsyncStorage.getItem("token");
+
+    await api
+      .post(
+        "/schedule/disponibilityprofessional",
+        {
+          id,
+          date: dateSelect,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((res: any) => {
+        if (!res.data.data) {
+          setResApi("Nenhum horario disponivel");
+        } else {
+          setResApi(false);
+          setHours(res.data.data.info);
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  }
+
   return (
     <ContainerSchedule>
       <InforDays>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <BoxDays>
-            <Text>D</Text>
-            <Text>1/11</Text>
-          </BoxDays>
-
-          <BoxDays>
-            <Text>S</Text>
-            <Text>2/11</Text>
-          </BoxDays>
-
-          <BoxDays>
-            <Text>T</Text>
-            <Text>3/11</Text>
-          </BoxDays>
-
-          <BoxDays>
-            <Text>Q</Text>
-            <Text>4/11</Text>
-          </BoxDays>
-          <BoxDays>
-            <Text>Q</Text>
-            <Text>5/11</Text>
-          </BoxDays>
-          <BoxDays>
-            <Text>S</Text>
-            <Text>6/11</Text>
-          </BoxDays>
-
-          <BoxDays>
-            <Text>S</Text>
-            <Text>7/11</Text>
-          </BoxDays>
-        </ScrollView>
+        <BoxDays>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={true}
+            style={{
+              width: "100%",
+              padding: 10,
+            }}
+          >
+            {datesFilter &&
+              datesFilter.map((date: any, i: number) => {
+                return (
+                  <BoxDayFind
+                    $select={date === dateSelect ? true : false}
+                    key={i}
+                    onPress={() => setDateSelet(date)}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                      }}
+                    >
+                      {date}
+                    </Text>
+                  </BoxDayFind>
+                );
+              })}
+          </ScrollView>
+        </BoxDays>
       </InforDays>
 
       <HoursDisponibility>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <BoxTime>
-            <Hour>
-              <Text>08:00</Text>
-            </Hour>
-            <Hour>
-              <Text>08:30</Text>
-            </Hour>
-            <Hour>
-              <Text>09:00</Text>
-            </Hour>
-            <Hour>
-              <Text>09:30</Text>
-            </Hour>
-            <Hour>
-              <Text>10:00</Text>
-            </Hour>
-            <Hour>
-              <Text>10:30</Text>
-            </Hour>
-            <Hour>
-              <Text>11:00</Text>
-            </Hour>
-            <Hour>
-              <Text>11:30</Text>
-            </Hour>
-            <Hour>
-              <Text>12:00</Text>
-            </Hour>
-            <Hour>
-              <Text>12:30</Text>
-            </Hour>
-            <Hour>
-              <Text>13:00</Text>
-            </Hour>
-            <Hour>
-              <Text>13:30</Text>
-            </Hour>
-            <Hour>
-              <Text>14:00</Text>
-            </Hour>
-            <Hour>
-              <Text>14:30</Text>
-            </Hour>
-            <Hour>
-              <Text>15:00</Text>
-            </Hour>
-            <Hour>
-              <Text>15:30</Text>
-            </Hour>
-            <Hour>
-              <Text>16:00</Text>
-            </Hour>
-            <Hour>
-              <Text>16:30</Text>
-            </Hour>
-            <Hour>
-              <Text>17:00</Text>
-            </Hour>
-            <Hour>
-              <Text>17:30</Text>
-            </Hour>
-            <Hour>
-              <Text>18:00</Text>
-            </Hour>
-            <Hour>
-              <Text>18:30</Text>
-            </Hour>
-            <Hour>
-              <Text>19:00</Text>
-            </Hour>
-            <Hour>
-              <Text>19:30</Text>
-            </Hour>
-            <Hour>
-              <Text>20:00</Text>
-            </Hour>
-            <Hour>
-              <Text>20:30</Text>
-            </Hour>
-            <Hour>
-              <Text>21:00</Text>
-            </Hour>
-            <Hour>
-              <Text>21:30</Text>
-            </Hour>
-          </BoxTime>
-        </ScrollView>
+        {resApi ? (
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
+          >
+            {resApi}
+          </Text>
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <BoxTime>
+              {hours &&
+                !resApi &&
+                hours.map((hour: any, index: number) => {
+                  return (
+                    <Hour
+                      $disponibility={hour[Object.getOwnPropertyNames(hour)[0]]}
+                      disabled={!hour[Object.getOwnPropertyNames(hour)[0]]}
+                      key={Object.getOwnPropertyNames(hour)[0]}
+                      onPress={() =>
+                        checkhourSelect(
+                          Object.getOwnPropertyNames(hour)[0],
+                          index,
+                        )
+                      }
+                    >
+                      <Text>{Object.getOwnPropertyNames(hour)[0]}</Text>
+                    </Hour>
+                  );
+                })}
+            </BoxTime>
+          </ScrollView>
+        )}
       </HoursDisponibility>
     </ContainerSchedule>
   );
