@@ -40,10 +40,13 @@ export const BoxTime = styled.View`
   margin: 5px;
 `;
 
-export const Hour = styled.TouchableOpacity<{ $disponibility?: boolean }>`
+export const Hour = styled.TouchableOpacity<{
+  $disponibility?: boolean;
+  $select?: boolean;
+}>`
   margin: 10px;
   background-color: ${(props) =>
-    props.$disponibility ? "#eae9ee" : "#fc4273;"};
+    props.$disponibility ? "#eae9ee" : "#fc4273"};
   align-items: center;
   justify-content: center;
   width: 60px;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, ContainerImgPlace, ImgPlace, Services } from "./styles";
-import { ScrollView } from "react-native";
+import { ScrollView, Alert } from "react-native";
 import BoxService from "./components/BoxService/BoxService";
 import Schedule from "./components/Schedule/Schedule";
 import Total from "./components/Total/Total";
@@ -13,7 +13,10 @@ const ProfileProfessional = ({ route, navigation }: any) => {
   const [total, setTotal] = useState<number>(0);
   const [selectService, setSelectService] = useState<Array<any>>([]); //inclui os serviços selecionados
   const [namesServices, setNamesServices] = useState<Array<string>>([]); //inclui somente o nome no array, para checar e disponibilizar se está checado
-  const [initService, setInitService] = useState();
+
+  const [indexHourInit, setIndexHourInit] = useState<any>();
+  const [hourInit, setHourInit] = useState("");
+  //retorno do filtro se horarios estão disponiveis para agendamento
 
   //atualiza as views
   const [includeView, setIncludeView] = useState(true);
@@ -31,6 +34,11 @@ const ProfileProfessional = ({ route, navigation }: any) => {
   useEffect(() => {
     calcTotal();
   }, [selectService]);
+
+  async function filterSelectHour(index: number, hourSelect: string) {
+    setIndexHourInit(index);
+    setHourInit(hourSelect);
+  }
 
   async function findUser(id: string) {
     const token = await AsyncStorage.getItem("token");
@@ -91,6 +99,30 @@ const ProfileProfessional = ({ route, navigation }: any) => {
     setTotal(calc);
   }
 
+  async function checkHourSelect(init: string, index: number, hours: any) {
+    let a = true;
+    //pegar indice do horario e checar as proximos blocos se estão disponiveis
+    //caso não esteja disponivel retornar erro ao usuário
+    let blocs = 0;
+    const qtdBlocs15mnts: any = await selectService.map((service: any) => {
+      const add = service.time / 15;
+      blocs += add;
+    }); //define quantos blocos tem nos serviços selecionados
+
+    for (let c = index; c < blocs + index; c++) {
+      if (!hours[c][Object.keys(hours[c])[0]]) {
+        //caso tenha algum valor false na agenda
+
+        a = false;
+        Alert.alert(
+          "Não é possivel iniciar nesse horário, seus serviços duram mais que o tempo disponivel",
+        );
+        setIndexHourInit("");
+        setHourInit("");
+      }
+    }
+  }
+
   return (
     <Container>
       <ContainerImgPlace>
@@ -130,9 +162,14 @@ const ProfileProfessional = ({ route, navigation }: any) => {
         </ScrollView>
       </Services>
 
-      <Schedule id={id} />
+      <Schedule
+        indexHourInit={indexHourInit}
+        setIndexHourInit={filterSelectHour}
+        checkHourSelect={checkHourSelect}
+        id={id}
+      />
 
-      <Total total={total} />
+      <Total total={total} hourInit={hourInit} />
     </Container>
   );
 };

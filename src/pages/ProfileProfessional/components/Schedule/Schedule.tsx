@@ -14,11 +14,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
   id: string;
+  checkHourSelect: any;
+  indexHourInit: any;
+  setIndexHourInit: any;
 }
 
-const Schedule = ({ id }: Props) => {
+const Schedule = ({
+  id,
+  checkHourSelect,
+  indexHourInit,
+  setIndexHourInit,
+}: Props) => {
   const [dateSelect, setDateSelet] = useState();
-  const [hours, setHours] = useState<any>();
+  const [hours, setHours] = useState<any>(); //array de horas disponiveis
   //state para guardar datas dos proximos 15 dias
   const [datesFilter, setDatesFilter] = useState<Array<string>>([]);
   const [resApi, setResApi] = useState<string | boolean>(false);
@@ -27,12 +35,6 @@ const Schedule = ({ id }: Props) => {
     setDatesFilter([""]);
     GetNext15Days();
   }, []);
-
-  function checkhourSelect(init: string, index: number) {
-    //pegar indice do horario
-
-    console.log(init, index);
-  }
 
   useEffect(() => {
     findDisponibility(id);
@@ -130,23 +132,52 @@ const Schedule = ({ id }: Props) => {
             <BoxTime>
               {hours &&
                 !resApi &&
-                hours.map((hour: any, index: number) => {
-                  return (
-                    <Hour
-                      $disponibility={hour[Object.getOwnPropertyNames(hour)[0]]}
-                      disabled={!hour[Object.getOwnPropertyNames(hour)[0]]}
-                      key={Object.getOwnPropertyNames(hour)[0]}
-                      onPress={() =>
-                        checkhourSelect(
-                          Object.getOwnPropertyNames(hour)[0],
-                          index,
-                        )
-                      }
-                    >
-                      <Text>{Object.getOwnPropertyNames(hour)[0]}</Text>
-                    </Hour>
-                  );
-                })}
+                hours.map((hour: any, index: number) => (
+                  <>
+                    {/* if serve para diferenciar o estilo no botao que for licado para o inicio do horario */}
+                    {index === indexHourInit ? (
+                      <Hour
+                        style={{
+                          backgroundColor:
+                            index === indexHourInit ? "#20dfe6" : "none",
+                        }}
+                        disabled={!hour[Object.getOwnPropertyNames(hour)[0]]}
+                        key={Object.getOwnPropertyNames(hour)[0]}
+                        onPress={() =>
+                          checkHourSelect(
+                            Object.getOwnPropertyNames(hour)[0],
+                            index,
+                            hours,
+                            setIndexHourInit(
+                              index,
+                              Object.getOwnPropertyNames(hour)[0],
+                            ),
+                          )
+                        }
+                      >
+                        <Text>{Object.getOwnPropertyNames(hour)[0]}</Text>
+                      </Hour>
+                    ) : (
+                      <Hour
+                        $disponibility={
+                          hour[Object.getOwnPropertyNames(hour)[0]]
+                        }
+                        disabled={!hour[Object.getOwnPropertyNames(hour)[0]]}
+                        key={Object.getOwnPropertyNames(hour)[0]}
+                        onPress={() =>
+                          checkHourSelect(
+                            Object.getOwnPropertyNames(hour)[0],
+                            index,
+                            hours,
+                          )
+                        }
+                        onPressIn={() => setIndexHourInit(index)}
+                      >
+                        <Text>{Object.getOwnPropertyNames(hour)[0]}</Text>
+                      </Hour>
+                    )}
+                  </>
+                ))}
             </BoxTime>
           </ScrollView>
         )}

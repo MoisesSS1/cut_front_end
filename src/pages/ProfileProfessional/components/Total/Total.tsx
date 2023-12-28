@@ -9,13 +9,18 @@ import {
 
 interface Props {
   total: number;
+  hourInit: any;
 }
 
-const Total = ({ total }: Props) => {
+const Total = ({ total, hourInit }: Props) => {
   return (
     <ContainerPayment>
       <BoxInfo>
         <ValueTotal>R$ {total.toFixed(2)} </ValueTotal>
+
+        <ValueTotal style={{ fontSize: 16, marginTop: 6 }}>
+          Inicio: {hourInit}
+        </ValueTotal>
       </BoxInfo>
 
       <ButtonFinishOrde>
