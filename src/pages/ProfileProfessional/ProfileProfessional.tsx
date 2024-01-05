@@ -13,10 +13,12 @@ const ProfileProfessional = ({ route, navigation }: any) => {
   const [total, setTotal] = useState<number>(0);
   const [selectService, setSelectService] = useState<Array<any>>([]); //inclui os serviços selecionados
   const [namesServices, setNamesServices] = useState<Array<string>>([]); //inclui somente o nome no array, para checar e disponibilizar se está checado
+  const [dateSelect, setDateSelet] = useState();
 
   const [indexHourInit, setIndexHourInit] = useState<any>();
   const [hourInit, setHourInit] = useState("");
-  //retorno do filtro se horarios estão disponiveis para agendamento
+  const [hourEnd, setHourEnd] = useState("");
+  const [blocsServices, setBlocsServices] = useState<number | undefined>();
 
   //atualiza as views
   const [includeView, setIncludeView] = useState(true);
@@ -32,7 +34,15 @@ const ProfileProfessional = ({ route, navigation }: any) => {
   }, []);
 
   useEffect(() => {
+    //altera o horário para nulo quando mudar a data
+    setIndexHourInit("");
+    setHourEnd("");
+    setHourInit("");
+  }, [dateSelect]);
+
+  useEffect(() => {
     calcTotal();
+    setHourInit("");
   }, [selectService]);
 
   async function filterSelectHour(index: number, hourSelect: string) {
@@ -56,7 +66,7 @@ const ProfileProfessional = ({ route, navigation }: any) => {
         setData(res.data);
       })
       .catch((err: any) => {
-        console.log(err);
+        console.log(err.response.data.message);
       });
   }
 
@@ -64,6 +74,7 @@ const ProfileProfessional = ({ route, navigation }: any) => {
     setIncludeView(false);
     //busca se nome está incluido no array, se tiver tira, else adiciona
     if (namesServices.includes(name)) {
+      setIncludeView(false);
       const nameS = namesServices;
       await nameS.splice(nameS.indexOf(name), 1);
       setNamesServices(nameS); //remove o nome do array
@@ -86,6 +97,7 @@ const ProfileProfessional = ({ route, navigation }: any) => {
       };
       setSelectService([...selectService, service]);
       setNamesServices([...namesServices, name]);
+      setIndexHourInit("");
       setIncludeView(true);
     }
   }
@@ -109,18 +121,70 @@ const ProfileProfessional = ({ route, navigation }: any) => {
       blocs += add;
     }); //define quantos blocos tem nos serviços selecionados
 
-    for (let c = index; c < blocs + index; c++) {
-      if (!hours[c][Object.keys(hours[c])[0]]) {
-        //caso tenha algum valor false na agenda
+    //inclui o horario de finalizaça do serviço
+    setHourEnd(Object.keys(hours[blocs + index])[0]);
+    setBlocsServices(blocs);
+    setIndexHourInit(index);
 
+    //caso tenha algum valor false na agenda, soma index e blocs
+    for (let c = index; c < blocs + index; c++) {
+      if (hours[c][Object.keys(hours[c])[0]] !== true) {
         a = false;
         Alert.alert(
           "Não é possivel iniciar nesse horário, seus serviços duram mais que o tempo disponivel",
         );
         setIndexHourInit("");
+        setHourEnd("");
         setHourInit("");
+        setBlocsServices(undefined);
+        setIndexHourInit(undefined);
+        return;
       }
     }
+  }
+
+  async function subimitScheduling() {
+    if (!selectService[0]) {
+      return Alert.alert("Necessário incluir serviço");
+    }
+
+    if (!hourInit) {
+      return Alert.alert("Nessesário incluir horário de inicio");
+    }
+
+    if (!dateSelect) {
+      return Alert.alert("Selecione uma data");
+    }
+
+    const token = await AsyncStorage.getItem("token");
+
+    const saveData = await api
+      .post(
+        "/scheduling/create",
+        {
+          id_professional: id,
+          services: selectService,
+          initService: hourInit,
+          end: hourEnd,
+          status_payment: "pending",
+          status_service: "waiting",
+          date: dateSelect,
+          qtd_blocos_timer: `${blocsServices}`,
+          indexInit: indexHourInit,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((res: any) => {
+        Alert.alert("Agendamento realizado com sucesso!");
+        navigation.navigate("Agenda");
+      })
+      .catch((err) => {
+        Alert.alert(err.response.data.message);
+      });
   }
 
   return (
@@ -163,13 +227,19 @@ const ProfileProfessional = ({ route, navigation }: any) => {
       </Services>
 
       <Schedule
+        dateSelect={dateSelect}
+        setDateSelet={setDateSelet}
         indexHourInit={indexHourInit}
         setIndexHourInit={filterSelectHour}
         checkHourSelect={checkHourSelect}
         id={id}
       />
 
-      <Total total={total} hourInit={hourInit} />
+      <Total
+        validadeDataForSaveDB={subimitScheduling}
+        total={total}
+        hourInit={hourInit}
+      />
     </Container>
   );
 };

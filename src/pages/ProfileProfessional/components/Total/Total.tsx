@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   BoxInfo,
   ButtonFinishOrde,
@@ -10,9 +9,10 @@ import {
 interface Props {
   total: number;
   hourInit: any;
+  validadeDataForSaveDB: any;
 }
 
-const Total = ({ total, hourInit }: Props) => {
+const Total = ({ total, hourInit, validadeDataForSaveDB }: Props) => {
   return (
     <ContainerPayment>
       <BoxInfo>
@@ -24,7 +24,7 @@ const Total = ({ total, hourInit }: Props) => {
       </BoxInfo>
 
       <ButtonFinishOrde>
-        <TextButton>Agendar</TextButton>
+        <TextButton onPress={() => validadeDataForSaveDB()}>Agendar</TextButton>
       </ButtonFinishOrde>
     </ContainerPayment>
   );

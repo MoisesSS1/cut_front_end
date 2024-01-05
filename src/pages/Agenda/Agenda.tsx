@@ -1,73 +1,51 @@
-import React from "react";
-import { Platform } from "react-native";
-import {
-  Body,
-  Container,
-  Filter,
-  OptionsFilter,
-  OptionsFilterButton,
-} from "./styles";
+import React, { useEffect, useState } from "react";
+import { Body, Container, Filter, OptionsFilter, TextOption } from "./styles";
 import Navbar from "../../layout/Navbar/Navbar";
-import { Text } from "react-native";
-
-import { SafeAreaView as SafeAreaViewAndroid } from "react-native-safe-area-context";
-import { SafeAreaView as SafeAreaViewIos } from "react-native";
+import Finalizados from "./Finalizados/Finalizados";
+import Agendados from "./Agendados/Agendados";
+import Cancelados from "./Cancelados/Cancelados";
+import api from "../../services/axios";
 
 const Agenda = ({ navigation }: any) => {
+  const [view, setView] = useState("finalizados");
+
+  useEffect(() => {
+    api.post("/");
+  }, []);
+
   return (
-    <>
-      {Platform.OS === "ios" && (
-        <SafeAreaViewIos style={{ flex: 1, backgroundColor: "#ffffff" }}>
-          <Container>
-            <Filter>
-              <OptionsFilter>
-                <OptionsFilterButton color="#000000" title="Agendados" />
-              </OptionsFilter>
+    <Container>
+      <Filter>
+        <OptionsFilter
+          $active={view === "agendados"}
+          onPress={() => setView("agendados")}
+        >
+          <TextOption>Agendados</TextOption>
+        </OptionsFilter>
 
-              <OptionsFilter $active={true}>
-                <OptionsFilterButton color="#000000" title="Finalizados" />
-              </OptionsFilter>
+        <OptionsFilter
+          $active={view === "finalizados"}
+          onPress={() => setView("finalizados")}
+        >
+          <TextOption>Finalizados</TextOption>
+        </OptionsFilter>
 
-              <OptionsFilter>
-                <OptionsFilterButton color="#000000" title="Cancelados" />
-              </OptionsFilter>
-            </Filter>
+        <OptionsFilter
+          $active={view === "cancelados"}
+          onPress={() => setView("cancelados")}
+        >
+          <TextOption>Cancelados</TextOption>
+        </OptionsFilter>
+      </Filter>
 
-            <Body>
-              <Text>Incluir lista de pedidos</Text>
-            </Body>
+      <Body>
+        {view === "finalizados" && <Finalizados />}
+        {view === "agendados" && <Agendados />}
+        {view === "cancelados" && <Cancelados />}
+      </Body>
 
-            <Navbar navigation={navigation} />
-          </Container>
-        </SafeAreaViewIos>
-      )}
-
-      {Platform.OS === "android" && (
-        <SafeAreaViewAndroid style={{ flex: 1, backgroundColor: "#ffffff" }}>
-          <Container>
-            <Filter>
-              <OptionsFilter>
-                <OptionsFilterButton color="#000000" title="Agendados" />
-              </OptionsFilter>
-
-              <OptionsFilter $active={true}>
-                <OptionsFilterButton color="#000000" title="Finalizados" />
-              </OptionsFilter>
-
-              <OptionsFilter>
-                <OptionsFilterButton color="#000000" title="Cancelados" />
-              </OptionsFilter>
-            </Filter>
-
-            <Body>
-              <Text>Incluir lista de pedidos</Text>
-            </Body>
-
-            <Navbar navigation={navigation} />
-          </Container>
-        </SafeAreaViewAndroid>
-      )}
-    </>
+      <Navbar navigation={navigation} />
+    </Container>
   );
 };
 

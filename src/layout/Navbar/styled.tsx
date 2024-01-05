@@ -3,7 +3,7 @@ import global from "../../global/global";
 
 export const Container = styled.View`
   width: 100%;
-  height: 80px;
+  height: 100px;
   background-color: ${global.theme.colors.white};
   border-top: 1px solid #ccc;
   position: absolute;
@@ -14,7 +14,7 @@ export const Container = styled.View`
   align-items: center;
   justify-content: space-around;
   padding: 0px 20px;
-  margin: 5px 0px;
+  margin: 5px 0px 0px 0px;
   border-radius: 0px;
 `;
 

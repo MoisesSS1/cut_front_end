@@ -2,7 +2,13 @@ import styled from "styled-components/native";
 import global from "../../global/global";
 
 export const Container = styled.View`
+  background-color: #ffffff;
   flex: 1;
+`;
+
+export const TextOption = styled.Text`
+  font-size: 17px;
+  font-weight: bold;
 `;
 
 export const Filter = styled.View`
@@ -13,21 +19,18 @@ export const Filter = styled.View`
   justify-content: space-around;
 `;
 
-export const OptionsFilter = styled.View<{ $active?: boolean }>`
+export const OptionsFilter = styled.TouchableOpacity<{ $active?: boolean }>`
   align-items: center;
   justify-content: center;
   text-align: center;
   border-bottom-color: ${(props) =>
     props.$active ? global.theme.colors.red : global.theme.colors.white};
   border-bottom-width: 3px;
+  padding: 20px 0px;
 `;
 
-export const OptionsFilterButton = styled.Button``;
-
-export const Body = styled.View`
-  background-color: #ebebeb;
-  height: 69%;
-  justify-content: center;
-  align-items: center;
+export const Body = styled.ScrollView`
+  background-color: #d15454;
+  flex: 1;
   text-align: center;
 `;

@@ -17,6 +17,8 @@ interface Props {
   checkHourSelect: any;
   indexHourInit: any;
   setIndexHourInit: any;
+  dateSelect: any;
+  setDateSelet: any;
 }
 
 const Schedule = ({
@@ -24,8 +26,9 @@ const Schedule = ({
   checkHourSelect,
   indexHourInit,
   setIndexHourInit,
+  dateSelect,
+  setDateSelet,
 }: Props) => {
-  const [dateSelect, setDateSelet] = useState();
   const [hours, setHours] = useState<any>(); //array de horas disponiveis
   //state para guardar datas dos proximos 15 dias
   const [datesFilter, setDatesFilter] = useState<Array<string>>([]);
@@ -159,11 +162,13 @@ const Schedule = ({
                       </Hour>
                     ) : (
                       <Hour
-                        $disponibility={
-                          hour[Object.getOwnPropertyNames(hour)[0]]
-                        }
-                        disabled={!hour[Object.getOwnPropertyNames(hour)[0]]}
                         key={Object.getOwnPropertyNames(hour)[0]}
+                        $disponibility={
+                          hour[Object.getOwnPropertyNames(hour)[0]] === true
+                        }
+                        disabled={
+                          hour[Object.getOwnPropertyNames(hour)[0]] !== true
+                        }
                         onPress={() =>
                           checkHourSelect(
                             Object.getOwnPropertyNames(hour)[0],
