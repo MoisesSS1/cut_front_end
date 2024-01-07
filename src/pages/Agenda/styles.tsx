@@ -30,7 +30,8 @@ export const OptionsFilter = styled.TouchableOpacity<{ $active?: boolean }>`
 `;
 
 export const Body = styled.ScrollView`
-  background-color: #d15454;
-  flex: 1;
+  background-color: #ffffff;
+  height: 100%;
+  margin-bottom: 100px;
   text-align: center;
 `;

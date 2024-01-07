@@ -17,7 +17,7 @@ export const BoxDays = styled.View`
   width: 90%;
 `;
 export const BoxDayFind = styled.TouchableOpacity<{ $select?: boolean }>`
-  background-color: ${(props) => (props.$select ? "#9ff8cc" : "#bebee2")};
+  background-color: ${(props) => (props.$select ? "#9ff8cc" : "#ffffff")};
   margin: 0px 10px;
   padding: 8px;
   align-items: center;

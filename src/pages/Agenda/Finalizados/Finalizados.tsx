@@ -1,11 +1,17 @@
 import React from "react";
-import { Container } from "../styles";
+import { Container } from "./styles";
 import { Text } from "react-native";
+import { IStatusServiceProps } from "../IStatusServiceProps";
+import ItemSchedule from "../ItemSchedule/ItemSchedule";
 
-const Finalizados = () => {
+const Finalizados = ({ data }: IStatusServiceProps[] | any) => {
   return (
     <Container>
-      <Text>Finalizados</Text>
+      {!data[0] && <Text>Ainda nao possui serviço finalizado</Text>}
+      {data[0] &&
+        data.map((item: any) => {
+          return <ItemSchedule key={item.id} {...item} />;
+        })}
     </Container>
   );
 };

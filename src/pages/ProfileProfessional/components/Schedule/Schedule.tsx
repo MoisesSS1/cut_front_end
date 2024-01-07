@@ -140,12 +140,12 @@ const Schedule = ({
                     {/* if serve para diferenciar o estilo no botao que for licado para o inicio do horario */}
                     {index === indexHourInit ? (
                       <Hour
+                        key={index}
                         style={{
                           backgroundColor:
                             index === indexHourInit ? "#20dfe6" : "none",
                         }}
                         disabled={!hour[Object.getOwnPropertyNames(hour)[0]]}
-                        key={Object.getOwnPropertyNames(hour)[0]}
                         onPress={() =>
                           checkHourSelect(
                             Object.getOwnPropertyNames(hour)[0],
@@ -162,7 +162,7 @@ const Schedule = ({
                       </Hour>
                     ) : (
                       <Hour
-                        key={Object.getOwnPropertyNames(hour)[0]}
+                        key={index}
                         $disponibility={
                           hour[Object.getOwnPropertyNames(hour)[0]] === true
                         }
