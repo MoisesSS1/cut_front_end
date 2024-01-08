@@ -1,19 +1,36 @@
-import React from "react";
+import { Alert } from "react-native";
 import { Container } from "./styles";
 import { Text } from "react-native";
 import { IStatusServiceProps } from "../IStatusServiceProps";
 import ItemSchedule from "../ItemSchedule/ItemSchedule";
 import api from "../../../services/axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Agendados = ({ data }: IStatusServiceProps[] | any) => {
+const Agendados = ({ data, refresh }: any) => {
   async function cancelService(item: IStatusServiceProps) {
+    const token = await AsyncStorage.getItem("token");
     api
-      .post("")
+      .post(
+        "/scheduling/canceled",
+        {
+          id_Agendamento: item.id,
+          date: item.date,
+          id_professional: item.id_professional,
+          indexInit: item.indexInit,
+          qtd_blocos_timer: item.qtd_blocos_timer,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
       .then((res) => {
-        console.log(res);
+        Alert.alert("Serviço cancelado");
+        refresh();
       })
       .catch((err: any) => {
-        console.log(err);
+        Alert.alert(err.response.data.message);
       });
   }
 

@@ -56,6 +56,10 @@ const Agenda = ({ navigation }: any) => {
     getInfo();
   }, []);
 
+  function refresh() {
+    navigation.navigate("Home");
+  }
+
   return (
     <Container>
       <Filter>
@@ -88,7 +92,9 @@ const Agenda = ({ navigation }: any) => {
         }}
       >
         {view === "finalizados" && <Finalizados data={dataFinalizados} />}
-        {view === "agendados" && <Agendados data={dataAgendados} />}
+        {view === "agendados" && (
+          <Agendados data={dataAgendados} refresh={refresh} />
+        )}
         {view === "cancelados" && <Cancelados data={dataCancelados} />}
       </Body>
 
