@@ -24,7 +24,7 @@ const Home = ({ navigation }: any) => {
             ]);
           }}
           query={{
-            key: "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0",
+            key: process.env.EXPO_PUBLIC_KEY_API_GOOGLE_MAPS,
             language: "pt-br",
           }}
         />

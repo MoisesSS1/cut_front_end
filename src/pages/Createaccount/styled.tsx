@@ -39,5 +39,6 @@ export const BoxSearchAddress = styled.View`
 export const Text = styled.Text`
   font-size: 18px;
   margin-top: 20px;
+  margin-bottom: 15px;
   font-weight: bold;
 `;

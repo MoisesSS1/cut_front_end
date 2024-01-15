@@ -18,8 +18,8 @@ const RadioButton = ({ data, onSelect }: any) => {
             onPress={() => selectHandler(item.value)}
             style={
               item.value === userOption
-                ? { backgroundColor: "#9ffd9f" }
-                : { backgroundColor: "aliceblue" }
+                ? { backgroundColor: "#25f3f3" }
+                : { backgroundColor: "#ffffff" }
             }
           >
             <Text> {item.value}</Text>

@@ -1,15 +1,16 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View } from "react-native";
 import { Container, ContainerInputs, Input, Text } from "./styled";
 import Buttom from "../../components/Buttom/Buttom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import api from "../../services/axios";
 import Message from "../../components/Message/Message";
 import RadioButton from "../../components/RadioButton/RadioButton";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../contexts/Auth";
 
 const CreateAccount = ({ navigation }: any) => {
   const [data, setData] = useState<Array<object>>([
     { value: "MASC" },
-    { value: "AMBOS" },
     { value: "FEM" },
   ]);
   const [option, setOption] = useState<any>("AMBOS");
@@ -18,11 +19,11 @@ const CreateAccount = ({ navigation }: any) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [cellPhone, setCellPhone] = useState<string>("");
-  const [cep, setCep] = useState<string>("");
-  const [number, setNumber] = useState<string>("");
 
   const [message, setMessage] = useState();
   const [type, setType] = useState("");
+
+  const auth = useContext(AuthContext);
 
   async function handleSubmit() {
     var typeService = "MASCULINO";
@@ -33,38 +34,28 @@ const CreateAccount = ({ navigation }: any) => {
       typeService = "FEMININO";
     }
 
-    const address = {
-      cep,
-      number,
-    };
-
     const createAcount = await api
-      .post("/professional/createaccount", {
+      .post("/client/createaccount", {
         name,
         email,
         password,
         phone: cellPhone,
-        address,
-        types_service: typeService,
+        typeService,
       })
-      .then((res: any) => {
-        setMessage(res.data.message);
+      .then(async (res: any) => {
+        const tokenset = await AsyncStorage.setItem(
+          "token",
+          res.data.createUser.token,
+        );
 
-        setType("success");
+        auth.signIn(res.data.createUser.token);
 
-        setLogin(res.data.create.token);
+        navigation.navigate("Home");
       })
       .catch((err) => {
         setMessage(err.response.data.message);
         setType("error");
       });
-  }
-
-  async function setLogin(token: string) {
-    const setToken = await AsyncStorage.setItem("token", token);
-    setTimeout(() => {
-      navigation.navigate("Main");
-    }, 3000);
   }
 
   return (
@@ -103,25 +94,19 @@ const CreateAccount = ({ navigation }: any) => {
               onChangeText={(value) => setCellPhone(value)}
             />
 
-            <Input
-              placeholder="cep"
-              value={cep}
-              style={{ textAlign: "center" }}
-              keyboardType="phone-pad"
-              onChangeText={(value) => setCep(value)}
-            />
-            <Input
-              placeholder="numero"
-              value={number}
-              style={{ textAlign: "center" }}
-              keyboardType="default"
-              onChangeText={(value) => setNumber(value)}
-            />
-            <Text>PUBLICO</Text>
-            <RadioButton
-              data={data}
-              onSelect={(value: string) => setOption(value)}
-            />
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "space-around",
+                margin: 30,
+              }}
+            >
+              <Text>Tipo de serviço:</Text>
+              <RadioButton
+                data={data}
+                onSelect={(value: string) => setOption(value)}
+              />
+            </View>
           </ContainerInputs>
 
           <Buttom text="CRIAR" onPress={() => handleSubmit()} />

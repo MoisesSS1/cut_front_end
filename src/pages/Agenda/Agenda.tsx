@@ -48,7 +48,8 @@ const Agenda = ({ navigation }: any) => {
             }
           });
         })
-        .catch((err) => {
+        .catch((err: any) => {
+          console.log(err);
           Alert.alert(err.response.data.message);
         });
     }

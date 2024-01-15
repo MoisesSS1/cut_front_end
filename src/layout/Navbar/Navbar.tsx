@@ -6,44 +6,24 @@ import IconEvilIcons from "react-native-vector-icons/EvilIcons";
 const Navbar = ({ navigation }: any) => {
   return (
     <Container>
-      <BoxIcon>
-        <Icon
-          onPress={() => navigation.navigate("Home")}
-          name="home"
-          size={20}
-        />
-        <DescIcon onPress={() => navigation.navigate("Home")}>Home</DescIcon>
+      <BoxIcon onPress={() => navigation.navigate("Home")}>
+        <Icon name="home" size={20} />
+        <DescIcon>Home</DescIcon>
       </BoxIcon>
 
-      <BoxIcon>
-        <Icon
-          onPress={() => navigation.navigate("Agenda")}
-          name="reorder"
-          size={20}
-        />
-        <DescIcon onPress={() => navigation.navigate("Agenda")}>
-          Agenda
-        </DescIcon>
+      <BoxIcon onPress={() => navigation.navigate("Agenda")}>
+        <Icon name="reorder" size={20} />
+        <DescIcon>Agenda</DescIcon>
       </BoxIcon>
 
-      <BoxIcon>
-        <IconFeather
-          onPress={() => navigation.navigate("Help")}
-          name="help-circle"
-          size={20}
-        />
-        <DescIcon onPress={() => navigation.navigate("Help")}>Ajuda</DescIcon>
+      <BoxIcon onPress={() => navigation.navigate("Help")}>
+        <IconFeather name="help-circle" size={20} />
+        <DescIcon>Ajuda</DescIcon>
       </BoxIcon>
 
-      <BoxIcon>
-        <IconEvilIcons
-          onPress={() => navigation.navigate("Help")}
-          name="user"
-          size={30}
-        />
-        <DescIcon onPress={() => navigation.navigate("Profile")}>
-          Perfil
-        </DescIcon>
+      <BoxIcon onPress={() => navigation.navigate("Profile")}>
+        <IconEvilIcons name="user" size={30} />
+        <DescIcon>Perfil</DescIcon>
       </BoxIcon>
     </Container>
   );

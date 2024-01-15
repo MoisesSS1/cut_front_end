@@ -1,56 +1,71 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Buttom from "../../components/Buttom/Buttom";
 import { Container, ContainerInputs, Input } from "./styled";
 import api from "../../services/axios";
+import Message from "../../components/Message/Message";
+import { AuthContext } from "../../contexts/Auth";
 
 const Login = ({ navigation }: any) => {
+  const [message, setMessage] = useState<string | boolean>("");
+  const [type, setType] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleSubmit() {
-    if (!email || !password) {
-      Alert.alert("Preencha as informações corretamente");
-    }
+  const auth = useContext(AuthContext);
 
+  async function handleSubmit() {
     api
-      .post("/professional/login", {
+      .post("/client/login", {
         email,
         password,
       })
       .then(async (res) => {
         const token = await AsyncStorage.setItem("token", res.data.token);
 
-        navigation.navigate("Main");
+        auth.signIn(res.data.token);
+
+        navigation.navigate("Home");
       })
       .catch((err) => {
-        Alert.alert(err.response.data.message);
+        setType("error");
+        setMessage(err.response.data.message);
       });
   }
 
   return (
-    <Container>
-      <ContainerInputs>
-        <Input
-          value={email}
-          placeholder="email"
-          style={{ textAlign: "center" }}
-          onChangeText={(value) => setEmail(value)}
-        />
+    <>
+      {message ? (
+        <Message setMessage={setMessage} message={message} type={type} />
+      ) : (
+        <Container>
+          <ContainerInputs>
+            <Input
+              value={email}
+              placeholder="email"
+              style={{ textAlign: "center" }}
+              onChangeText={(value) => setEmail(value)}
+            />
 
-        <Input
-          value={password}
-          placeholder="senha"
-          style={{ textAlign: "center" }}
-          secureTextEntry
-          onChangeText={(value) => setPassword(value)}
-        />
-      </ContainerInputs>
+            <Input
+              value={password}
+              placeholder="senha"
+              style={{ textAlign: "center" }}
+              secureTextEntry
+              onChangeText={(value) => setPassword(value)}
+            />
+          </ContainerInputs>
 
-      <Buttom text="ENTRAR" onPress={() => handleSubmit()} />
-    </Container>
+          <Buttom text="ENTRAR" onPress={() => handleSubmit()} />
+          <Buttom
+            text="CRIAR CONTA"
+            onPress={() => navigation.navigate("CreateAccount")}
+          />
+        </Container>
+      )}
+    </>
   );
 };
 

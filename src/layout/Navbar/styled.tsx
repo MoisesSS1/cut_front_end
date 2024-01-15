@@ -18,7 +18,7 @@ export const Container = styled.View`
   border-radius: 0px;
 `;
 
-export const BoxIcon = styled.View`
+export const BoxIcon = styled.TouchableOpacity`
   display: flex;
   align-items: center;
   justify-content: center;
