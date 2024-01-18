@@ -4,8 +4,9 @@ import { useContext, useState } from "react";
 import Buttom from "../../components/Buttom/Buttom";
 import { Container, ContainerInputs, Input } from "./styled";
 import api from "../../services/axios";
-import Message from "../../components/Message/Message";
 import { AuthContext } from "../../contexts/Auth";
+
+import { Alert } from "react-native";
 
 const Login = ({ navigation }: any) => {
   const [message, setMessage] = useState<string | boolean>("");
@@ -27,45 +28,42 @@ const Login = ({ navigation }: any) => {
 
         auth.signIn(res.data.token);
 
-        navigation.navigate("Home");
+        navigation.navigate("Main");
       })
       .catch((err) => {
-        setType("error");
-        setMessage(err.response.data.message);
+        if (err.response.data.message) {
+          Alert.alert(err.response.data.message);
+        } else {
+          Alert.alert(err.message);
+        }
       });
   }
 
   return (
-    <>
-      {message ? (
-        <Message setMessage={setMessage} message={message} type={type} />
-      ) : (
-        <Container>
-          <ContainerInputs>
-            <Input
-              value={email}
-              placeholder="email"
-              style={{ textAlign: "center" }}
-              onChangeText={(value) => setEmail(value)}
-            />
+    <Container>
+      <ContainerInputs>
+        <Input
+          value={email}
+          placeholder="email"
+          style={{ textAlign: "center" }}
+          onChangeText={(value) => setEmail(value)}
+        />
 
-            <Input
-              value={password}
-              placeholder="senha"
-              style={{ textAlign: "center" }}
-              secureTextEntry
-              onChangeText={(value) => setPassword(value)}
-            />
-          </ContainerInputs>
+        <Input
+          value={password}
+          placeholder="senha"
+          style={{ textAlign: "center" }}
+          secureTextEntry
+          onChangeText={(value) => setPassword(value)}
+        />
+      </ContainerInputs>
 
-          <Buttom text="ENTRAR" onPress={() => handleSubmit()} />
-          <Buttom
-            text="CRIAR CONTA"
-            onPress={() => navigation.navigate("CreateAccount")}
-          />
-        </Container>
-      )}
-    </>
+      <Buttom text="ENTRAR" onPress={() => handleSubmit()} />
+      <Buttom
+        text="CRIAR CONTA"
+        onPress={() => navigation.navigate("CreateAccount")}
+      />
+    </Container>
   );
 };
 

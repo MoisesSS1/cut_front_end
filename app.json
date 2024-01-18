@@ -11,11 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "y"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,13 +31,15 @@
               "pathPrefix": "/congrats"
             }
           ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
+          "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "package": "com.moises_ss.myapp"
+      "package": "com.moises_ss.myapp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
