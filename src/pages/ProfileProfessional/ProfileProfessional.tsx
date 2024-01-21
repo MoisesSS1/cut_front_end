@@ -149,7 +149,7 @@ const ProfileProfessional = ({ route, navigation }: any) => {
     }
 
     if (!hourInit) {
-      return Alert.alert("Nessesário incluir horário de inicio");
+      return Alert.alert("Necessário incluir horário de inicio");
     }
 
     if (!dateSelect) {

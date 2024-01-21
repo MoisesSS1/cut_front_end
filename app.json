@@ -13,10 +13,20 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "config": {
+        "googleMapsApiKey": "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0"
+      },
       "supportsTablet": true,
-      "bundleIdentifier": "y"
+      "bundleIdentifier": "y",
+      "ios.config.googleMapsApiKey": "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0"
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0"
+        }
+      },
+      "android.config.googleMaps.apiKey": "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -34,12 +44,7 @@
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "package": "com.moises_ss.myapp",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0"
-        }
-      }
+      "package": "com.moises_ss.myapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"

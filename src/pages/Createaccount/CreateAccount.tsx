@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View } from "react-native";
+import { View, Platform, KeyboardAvoidingView } from "react-native";
 import { Container, ContainerInputs, Input, Text } from "./styled";
 import Buttom from "../../components/Buttom/Buttom";
 import { useContext, useState } from "react";
@@ -9,6 +9,8 @@ import RadioButton from "../../components/RadioButton/RadioButton";
 import { AuthContext } from "../../contexts/Auth";
 
 const CreateAccount = ({ navigation }: any) => {
+  const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0;
+
   const [data, setData] = useState<Array<object>>([
     { value: "MASC" },
     { value: "FEM" },
@@ -64,50 +66,52 @@ const CreateAccount = ({ navigation }: any) => {
         <Message message={message} setMessage={setMessage} type={type} />
       ) : (
         <Container>
-          <ContainerInputs>
-            <Input
-              value={name}
-              placeholder="nome"
-              style={{ textAlign: "center" }}
-              onChangeText={(value) => setName(value)}
-            />
-            <Input
-              value={email}
-              placeholder="email@email.com"
-              keyboardType="email-address"
-              style={{ textAlign: "center" }}
-              onChangeText={(value) => setEmail(value)}
-            />
-            <Input
-              value={password}
-              placeholder="senha"
-              style={{ textAlign: "center" }}
-              secureTextEntry
-              onChangeText={(value) => setPassword(value)}
-            />
-
-            <Input
-              placeholder="11999999999"
-              value={cellPhone}
-              style={{ textAlign: "center" }}
-              keyboardType="phone-pad"
-              onChangeText={(value) => setCellPhone(value)}
-            />
-
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "space-around",
-                margin: 30,
-              }}
-            >
-              <Text>Tipo de serviço:</Text>
-              <RadioButton
-                data={data}
-                onSelect={(value: string) => setOption(value)}
+          <KeyboardAvoidingView behavior="height">
+            <ContainerInputs>
+              <Input
+                value={name}
+                placeholder="nome"
+                style={{ textAlign: "center" }}
+                onChangeText={(value) => setName(value)}
               />
-            </View>
-          </ContainerInputs>
+              <Input
+                value={email}
+                placeholder="email@email.com"
+                keyboardType="email-address"
+                style={{ textAlign: "center" }}
+                onChangeText={(value) => setEmail(value)}
+              />
+              <Input
+                value={password}
+                placeholder="senha"
+                style={{ textAlign: "center" }}
+                secureTextEntry
+                onChangeText={(value) => setPassword(value)}
+              />
+
+              <Input
+                placeholder="11999999999"
+                value={cellPhone}
+                style={{ textAlign: "center" }}
+                keyboardType="phone-pad"
+                onChangeText={(value) => setCellPhone(value)}
+              />
+            </ContainerInputs>
+          </KeyboardAvoidingView>
+
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "space-around",
+              margin: 30,
+            }}
+          >
+            <Text>Tipo de serviço:</Text>
+            <RadioButton
+              data={data}
+              onSelect={(value: string) => setOption(value)}
+            />
+          </View>
 
           <Buttom text="CRIAR" onPress={() => handleSubmit()} />
         </Container>

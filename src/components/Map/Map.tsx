@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Balon, Content, ImgTriangle, ImgUser } from "./styles";
 import api from "../../services/axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -48,6 +48,7 @@ const Map = ({ navigation, coordenates }: any) => {
     <>
       {location && (
         <MapView
+          provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={{
             latitude: location[0],

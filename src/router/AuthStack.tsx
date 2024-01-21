@@ -10,14 +10,14 @@ const AuthStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Login"
-        options={{ headerTransparent: true, title: "LOGIN" }}
+        options={{ headerTransparent: true, title: "" }}
         component={Login}
       />
       <Stack.Screen
         name="CreateAccount"
         options={{
           headerTransparent: true,
-          title: "CRIAR CONTA",
+          title: "",
         }}
         component={CreateAccount}
       />

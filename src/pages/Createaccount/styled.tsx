@@ -12,7 +12,7 @@ export const ContainerInputs = styled.View`
   background-color: white;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  height: 550px;
 `;
 
 export const Input = styled.TextInput`
