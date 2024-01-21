@@ -130,9 +130,7 @@ const ProfileProfessional = ({ route, navigation }: any) => {
     for (let c = index; c < blocs + index; c++) {
       if (hours[c][Object.keys(hours[c])[0]] !== true) {
         a = false;
-        Alert.alert(
-          "Não é possivel iniciar nesse horário, seus serviços duram mais que o tempo disponivel",
-        );
+        Alert.alert("Não é possivel iniciar nesse horário!");
         setIndexHourInit("");
         setHourEnd("");
         setHourInit("");

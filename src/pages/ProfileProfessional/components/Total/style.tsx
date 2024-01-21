@@ -8,7 +8,6 @@ export const ContainerPayment = styled.View`
   width: 100%;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 10px;
 `;
 
 export const BoxInfo = styled.View`
