@@ -1,3 +1,4 @@
+import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 export const BoxServiceContainer = styled.View`
@@ -27,7 +28,7 @@ export const IconService = styled.View`
 export const NameService = styled.Text`
   font-weight: bold;
   padding: 10px 0px;
-  font-size: 18px;
+  font-size: ${RFValue(18, 828)}px;
 `;
 
 export const DescriptionService = styled.View`

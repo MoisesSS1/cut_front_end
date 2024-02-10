@@ -15,6 +15,9 @@ const ProfileProfessional = ({ route, navigation }: any) => {
   const [namesServices, setNamesServices] = useState<Array<string>>([]); //inclui somente o nome no array, para checar e disponibilizar se está checado
   const [dateSelect, setDateSelet] = useState();
 
+  //info User
+  const [userInfo, setUserInfo] = useState<any>(null);
+
   const [indexHourInit, setIndexHourInit] = useState<any>();
   const [hourInit, setHourInit] = useState("");
   const [hourEnd, setHourEnd] = useState("");
@@ -29,8 +32,9 @@ const ProfileProfessional = ({ route, navigation }: any) => {
     time: number;
   }
 
-  const token = useEffect(() => {
+  useEffect(() => {
     findUser(id);
+    findInfoUser();
   }, []);
 
   useEffect(() => {
@@ -50,6 +54,30 @@ const ProfileProfessional = ({ route, navigation }: any) => {
     setHourInit(hourSelect);
   }
 
+  async function findInfoUser() {
+    const id = await AsyncStorage.getItem("id");
+    const token = await AsyncStorage.getItem("token");
+
+    await api
+      .post(
+        "/client/info",
+        {
+          id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((res) => {
+        setUserInfo(res.data);
+      })
+      .catch((err: any) => {
+        Alert.alert(err.response.data.message);
+      });
+  }
+
   async function findUser(id: string) {
     const token = await AsyncStorage.getItem("token");
     await api
@@ -66,7 +94,7 @@ const ProfileProfessional = ({ route, navigation }: any) => {
         setData(res.data);
       })
       .catch((err: any) => {
-        console.log(err.response.data.message);
+        Alert.alert(err.response.data.message);
       });
   }
 
@@ -169,6 +197,8 @@ const ProfileProfessional = ({ route, navigation }: any) => {
           date: dateSelect,
           qtd_blocos_timer: `${blocsServices}`,
           indexInit: indexHourInit,
+          user_number: userInfo.phone,
+          user_name: userInfo.name,
         },
         {
           headers: {

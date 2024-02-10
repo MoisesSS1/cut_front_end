@@ -1,3 +1,4 @@
+import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 export const ContainerPayment = styled.View`
@@ -6,6 +7,7 @@ export const ContainerPayment = styled.View`
   bottom: 0;
   left: 0;
   width: 100%;
+  background-color: #f6f6ff;
   flex-direction: row;
   align-items: center;
 `;
@@ -17,14 +19,14 @@ export const BoxInfo = styled.View`
   width: 50%;
 `;
 export const ValueTotal = styled.Text`
-  font-size: 20px;
+  font-size: ${RFValue(18, 828)}px;
   font-weight: bold;
 `;
 
 export const ButtonFinishOrde = styled.TouchableOpacity`
   background-color: #e61d51;
-  height: 60px;
-  margin-left: 30px;
+  height: 50px;
+  margin-left: 20px;
   align-items: center;
   justify-content: center;
   border-radius: 10px;

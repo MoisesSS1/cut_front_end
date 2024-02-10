@@ -1,18 +1,17 @@
+import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
-export const Container = styled.View`
-  background-color: white;
+export const Container = styled.ScrollView`
+  background-color: #ffffff;
   flex: 1;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 30px;
+  padding-bottom: 40px;
 `;
 
 export const ContainerInputs = styled.View`
-  background-color: white;
+  background-color: #ffffff;
   justify-content: center;
   align-items: center;
-  height: 550px;
+  height: 450px;
 `;
 
 export const Input = styled.TextInput`
@@ -25,19 +24,8 @@ export const Input = styled.TextInput`
   border-radius: 10px 10px 0px 0px;
 `;
 
-export const BoxSearchAddress = styled.View`
-  border-radius: 10px 10px 0px 0px;
-  width: 300px;
-  margin: 10px;
-  display: flex;
-  border-color: #25f3f3;
-  border-bottom-width: 6px;
-  align-items: center;
-  flex-direction: row;
-`;
-
 export const Text = styled.Text`
-  font-size: 18px;
+  font-size: ${RFValue(18, 828)}px;
   margin-top: 20px;
   margin-bottom: 15px;
   font-weight: bold;

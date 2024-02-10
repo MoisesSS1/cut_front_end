@@ -1,10 +1,8 @@
 import styled from "styled-components/native";
 
-export const Container = styled.View`
-  background-color: white;
+export const Container = styled.ScrollView`
+  background-color: #ffffff;
   flex: 1;
-  justify-content: space-between;
-  align-items: center;
   padding-bottom: 30px;
 `;
 
@@ -12,7 +10,7 @@ export const ContainerInputs = styled.View`
   background-color: white;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  height: 400px;
 `;
 
 export const Input = styled.TextInput`

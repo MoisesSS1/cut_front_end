@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import global from "../../global/global";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.View`
   width: 100%;
@@ -25,7 +26,7 @@ export const BoxIcon = styled.TouchableOpacity`
 `;
 
 export const DescIcon = styled.Text`
-  font-size: 15px;
+  font-size: ${RFValue(18, 828)}px;
   color: ${global.theme.colors.gray2};
   font-weight: bold;
   padding-top: 10px;

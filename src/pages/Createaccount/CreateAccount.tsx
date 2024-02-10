@@ -12,10 +12,10 @@ const CreateAccount = ({ navigation }: any) => {
   const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0;
 
   const [data, setData] = useState<Array<object>>([
-    { value: "MASC" },
-    { value: "FEM" },
+    { value: "MASCULINO" },
+    { value: "FEMININO" },
   ]);
-  const [option, setOption] = useState<any>("AMBOS");
+  const [option, setOption] = useState<any>("MASCULINO");
 
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -30,9 +30,9 @@ const CreateAccount = ({ navigation }: any) => {
   async function handleSubmit() {
     var typeService = "MASCULINO";
 
-    if (option == "AMBOS") {
-      typeService = "AMBOS";
-    } else if (option == "FEM") {
+    if (option == "MASCULINO") {
+      typeService = "MASCULINO";
+    } else if (option == "FEMININO") {
       typeService = "FEMININO";
     }
 
@@ -65,7 +65,12 @@ const CreateAccount = ({ navigation }: any) => {
       {message ? (
         <Message message={message} setMessage={setMessage} type={type} />
       ) : (
-        <Container>
+        <Container
+          contentContainerStyle={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <KeyboardAvoidingView behavior="height">
             <ContainerInputs>
               <Input
@@ -80,6 +85,7 @@ const CreateAccount = ({ navigation }: any) => {
                 keyboardType="email-address"
                 style={{ textAlign: "center" }}
                 onChangeText={(value) => setEmail(value)}
+                autoCapitalize="none"
               />
               <Input
                 value={password}
@@ -87,6 +93,7 @@ const CreateAccount = ({ navigation }: any) => {
                 style={{ textAlign: "center" }}
                 secureTextEntry
                 onChangeText={(value) => setPassword(value)}
+                autoCapitalize="none"
               />
 
               <Input
@@ -97,23 +104,20 @@ const CreateAccount = ({ navigation }: any) => {
                 onChangeText={(value) => setCellPhone(value)}
               />
             </ContainerInputs>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
+              <Text>Tipo de serviço:</Text>
+              <RadioButton
+                data={data}
+                onSelect={(value: string) => setOption(value)}
+              />
+              <Buttom text="CRIAR" onPress={() => handleSubmit()} />
+            </View>
           </KeyboardAvoidingView>
-
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "space-around",
-              margin: 30,
-            }}
-          >
-            <Text>Tipo de serviço:</Text>
-            <RadioButton
-              data={data}
-              onSelect={(value: string) => setOption(value)}
-            />
-          </View>
-
-          <Buttom text="CRIAR" onPress={() => handleSubmit()} />
         </Container>
       )}
     </>

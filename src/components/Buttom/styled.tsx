@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export const ContainOptions = styled.View<{ $color?: string }>`
   width: 250px;
@@ -13,5 +14,5 @@ export const ContainOptions = styled.View<{ $color?: string }>`
 export const Option = styled.Text`
   font-weight: bold;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: ${RFValue(18, 828)}px;
 `;

@@ -23,8 +23,8 @@ const Total = ({ total, hourInit, validadeDataForSaveDB }: Props) => {
         </ValueTotal>
       </BoxInfo>
 
-      <ButtonFinishOrde>
-        <TextButton onPress={() => validadeDataForSaveDB()}>Agendar</TextButton>
+      <ButtonFinishOrde onPress={() => validadeDataForSaveDB()}>
+        <TextButton>Agendar</TextButton>
       </ButtonFinishOrde>
     </ContainerPayment>
   );

@@ -6,7 +6,7 @@ import { Container, ContainerInputs, Input } from "./styled";
 import api from "../../services/axios";
 import { AuthContext } from "../../contexts/Auth";
 
-import { Alert } from "react-native";
+import { Alert, KeyboardAvoidingView, View } from "react-native";
 
 const Login = ({ navigation }: any) => {
   const [message, setMessage] = useState<string | boolean>("");
@@ -26,6 +26,8 @@ const Login = ({ navigation }: any) => {
       .then(async (res) => {
         const token = await AsyncStorage.setItem("token", res.data.token);
 
+        const id = await AsyncStorage.setItem("id", res.data.id);
+
         auth.signIn(res.data.token);
 
         navigation.navigate("Main");
@@ -40,7 +42,12 @@ const Login = ({ navigation }: any) => {
   }
 
   return (
-    <Container>
+    <Container
+      contentContainerStyle={{
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
       <ContainerInputs>
         <Input
           value={email}

@@ -1,7 +1,8 @@
+import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 export const Container = styled.View`
-  height: 20px;
+  min-height: 20px;
   width: 100%;
   flex-direction: row;
   align-items: center;
@@ -11,13 +12,12 @@ export const Container = styled.View`
 `;
 
 export const Text = styled.Text`
-  font-size: 16px;
+  font-size: ${RFValue(18, 828)}px;
   color: #000000;
 `;
 
 export const Pressable = styled.Pressable`
   height: 30px;
-  width: 100px;
   justify-content: center;
   padding: 0px 5px;
   align-items: center;
