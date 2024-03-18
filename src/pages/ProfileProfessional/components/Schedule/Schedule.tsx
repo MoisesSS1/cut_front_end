@@ -45,16 +45,20 @@ const Schedule = ({
 
   async function GetNext15Days() {
     let date = new Date();
-    for (let i = 0; i < 14; i++) {
-      const dateEdit = `${date.getDate()}-${
-        date.getMonth() + 1
-      }-${date.getFullYear()}`;
+    for (let i = 0; i < 8; i++) {
+      if (i !== 0) {
+        const dateEdit = `${date.getDate()}-${
+          date.getMonth() + 1
+        }-${date.getFullYear()}`;
 
-      let dates = datesFilter;
+        let dates = datesFilter;
 
-      dates.push(dateEdit);
-      setDatesFilter(dates);
-      date.setDate(date.getDate() + 1);
+        dates.push(dateEdit);
+        setDatesFilter(dates);
+        date.setDate(date.getDate() + 1);
+      } else {
+        date.setDate(date.getDate() + 1);
+      }
     }
   }
   async function findDisponibility(id: string) {
