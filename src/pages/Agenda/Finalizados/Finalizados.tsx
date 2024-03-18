@@ -7,7 +7,7 @@ import ItemSchedule from "../ItemSchedule/ItemSchedule";
 const Finalizados = ({ data }: IStatusServiceProps[] | any) => {
   return (
     <Container>
-      {!data[0] && <Text>Ainda nao possui serviço finalizado</Text>}
+      {!data[0] && <Text>Ainda não possui serviços finalizados</Text>}
       {data[0] &&
         data.map((item: any) => {
           return <ItemSchedule key={item.id} {...item} />;

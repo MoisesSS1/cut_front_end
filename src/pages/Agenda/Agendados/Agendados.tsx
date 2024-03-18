@@ -36,7 +36,7 @@ const Agendados = ({ data, refresh }: any) => {
 
   return (
     <Container>
-      {!data[0] && <Text>Ainda nao possui serviço agendado</Text>}
+      {!data[0] && <Text>Ainda não possui serviços agendados</Text>}
       {data[0] &&
         data.map((item: IStatusServiceProps) => {
           return (

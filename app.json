@@ -21,7 +21,7 @@
       "ios.config.googleMapsApiKey": "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0"
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 5,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyDnAzroVfMQJ7O78UvXMDidPEiNMz6O1V0"
