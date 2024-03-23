@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 export const ContainerSchedule = styled.View`
   background-color: #ffffff;
   height: 35%;
-  padding-bottom: 30px;
+  margin-bottom: 30px;
 `;
 
 export const InforDays = styled.View`
@@ -39,6 +39,8 @@ export const BoxTime = styled.View`
   text-align: center;
   flex-wrap: wrap;
   margin: 5px;
+  padding-bottom: 30px;
+  background-color: #ffffff;
 `;
 
 export const Hour = styled.TouchableOpacity<{
