@@ -2,7 +2,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 export const ContainerPayment = styled.View`
-  height: 100px;
+  height: 11%;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -25,7 +25,7 @@ export const ValueTotal = styled.Text`
 
 export const ButtonFinishOrde = styled.TouchableOpacity`
   background-color: #e61d51;
-  height: 50px;
+  height: 50%;
   margin-left: 20px;
   align-items: center;
   justify-content: center;

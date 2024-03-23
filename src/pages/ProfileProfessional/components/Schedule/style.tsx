@@ -2,14 +2,16 @@ import styled from "styled-components/native";
 
 export const ContainerSchedule = styled.View`
   background-color: #ffffff;
-  height: 32%;
+  height: 35%;
+  padding-bottom: 30px;
 `;
 
 export const InforDays = styled.View`
   height: 60px;
-  margin: 20px 20px 20px 10px;
+  margin: 10px 20px 20px 0px;
   align-items: center;
   justify-content: center;
+  background-color: #ffffff;
 `;
 export const BoxDays = styled.View`
   justify-content: center;
@@ -29,7 +31,6 @@ export const HoursDisponibility = styled.View`
   text-align: center;
   justify-content: center;
   align-items: center;
-  height: 200px;
   width: 100%;
 `;
 

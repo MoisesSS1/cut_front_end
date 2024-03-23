@@ -8,7 +8,7 @@ export const Container = styled.View`
 export const ContainerImgPlace = styled.View`
   background-color: #050505;
   width: 100%;
-  height: 30%;
+  height: 20%;
   border-bottom-width: 3px;
   border-bottom-color: #bbbbbb;
 `;
